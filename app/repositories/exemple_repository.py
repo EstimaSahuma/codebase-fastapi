@@ -5,8 +5,11 @@ class ExampleRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get_example(self, example_id: int):
+    def byId(self, example_id: int):
         return self.db.query(Example).filter(Example.id == example_id).first()
+    
+    def getAll(self):
+        return self.db.query(Example).all()
 
     def create_example(self, name: str, description: str):
         example = Example(name=name, description=description)

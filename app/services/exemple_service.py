@@ -6,8 +6,11 @@ class ExampleService:
         self.db = SessionLocal()
         self.example_repo = ExampleRepository(self.db)
 
-    def get_example(self, example_id: int):
-        return self.example_repo.get_example(example_id)
+    def byId(self, example_id: int):
+        return self.example_repo.byId(example_id)
+    
+    def getAll(self):
+        return self.example_repo.getAll()
 
     def create_example(self, name: str, description: str):
         return self.example_repo.create_example(name, description)

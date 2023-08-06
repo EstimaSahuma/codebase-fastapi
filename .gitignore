@@ -6,7 +6,7 @@ __pycache__/
 *.env
 
 # Ignore alembic file
-*.alembic
+*alembic
 
 # Ignore generated directories and files
 /.venv/

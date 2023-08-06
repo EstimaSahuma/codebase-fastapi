@@ -11,9 +11,9 @@ class ExampleRepository:
     def getAll(self):
         return self.db.query(Example).all()
 
-    def create_example(self, name: str, description: str):
-        example = Example(name=name, description=description)
-        self.db.add(example)
-        self.db.commit()
-        self.db.refresh(example)
-        return example
+    def create_example(self, example_data):
+            example = Example(**example_data)
+            self.db.add(example)
+            self.db.commit()
+            self.db.refresh(example)
+            return example

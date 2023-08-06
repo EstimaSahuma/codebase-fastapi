@@ -12,5 +12,5 @@ class ExampleService:
     def getAll(self):
         return self.example_repo.getAll()
 
-    def create_example(self, name: str, description: str):
-        return self.example_repo.create_example(name, description)
+    def create_example(self, example_data):
+        return self.example_repo.create_example(example_data)

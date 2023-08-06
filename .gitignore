@@ -5,6 +5,9 @@ __pycache__/
 # Ignore environment-specific files
 *.env
 
+# Ignore alembic file
+*.alembic
+
 # Ignore generated directories and files
 /.venv/
 /venv/

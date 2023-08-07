@@ -9,7 +9,7 @@ router = APIRouter()
 user_service = UserService()
 
 @router.post("/token", response_model=TokenData)
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -23,6 +23,6 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
 def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
 
-router.post("/signup", response_model=UserInDB)
+@router.post("/signup", response_model=UserInDB)
 async def signup(user: UserCreate):
     return user_service.signup(user)

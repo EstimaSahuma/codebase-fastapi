@@ -5,15 +5,17 @@ from app.schemas.user import TokenData
 from datetime import datetime, timedelta
 import jwt
 from app.core.config import pwd_context
-from app.schemas.user import UserInDB, User
+from app.schemas.user import UserBase
+from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def authenticate_user(username: str, password: str):
+""" def authenticate_user(username: str, password: str):
     user = get_user_by_username(username)
-    if not user or not user.verify_password(password):
+    print(password)
+    if not user or not verify_password(password):
         return False
-    return user
+    return user """
 
 def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=15)):
     to_encode = data.copy()
@@ -48,18 +50,19 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 
-def verify_password(self, password: str):
-        return pwd_context.verify(password, self.hashed_password)
+def verify_password(password: str):
+    hashed_password = get_password_hash(password)
+    return pwd_context.verify(password, hashed_password)
 
 def get_password_hash(password: str):
-        return pwd_context.hash(password)
+    return pwd_context.hash(password)
     
 def authenticate_user(_username: str, _password: str):
-        # Fetch the user from the database using the provided username
-        # (database handling code goes here, use a database ORM like SQLAlchemy)
-        user = UserInDB(_username, _password)
-        if not user:
-            return None
-        if not verify_password(user.password, user.hashed_password):
-            return None
-        return user
+    # Fetch the user from the database using the provided username
+    # (database handling code goes here, use a database ORM like SQLAlchemy)
+    user = UserBase(_username, _password)
+    if not user:
+        return None
+    if not verify_password(user.password, user.hashed_password):
+        return None
+    return user

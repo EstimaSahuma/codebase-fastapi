@@ -8,3 +8,6 @@ class UserService:
 
     def signup(self, user_data):
         return self.user_repo.signup(user_data)
+    
+    def getByUsername(self, username):
+        return self.user_repo.getByUsername(username)

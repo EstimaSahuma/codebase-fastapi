@@ -14,3 +14,6 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
+    
+    def getByUsername(self, username):
+        return self.db.query(User).filter(User.username == username).first()

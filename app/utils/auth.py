@@ -4,18 +4,24 @@ from pydantic import ValidationError
 from app.schemas.user import TokenData
 from datetime import datetime, timedelta
 import jwt
+from app.core.database import SessionLocal
 from app.core.config import pwd_context
-from app.schemas.user import UserBase
+from app.schemas.user import UserLogin
 from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+db = SessionLocal()
 
-""" def authenticate_user(username: str, password: str):
-    user = get_user_by_username(username)
-    print(password)
-    if not user or not verify_password(password):
+def authenticate_user(username: str, password: str):
+    print("=========================")
+    # user = UserLogin(username=_username, password=get_password_hash(password))
+    #user =0
+    user = db.query(User).filter(User.username == username).first()
+
+    print(user.hashed_password)
+    if not user or not verify_password(password, user.hashed_password):
         return False
-    return user """
+    return user
 
 def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=15)):
     to_encode = data.copy()
@@ -50,19 +56,18 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 
-def verify_password(password: str):
-    hashed_password = get_password_hash(password)
-    return pwd_context.verify(password, hashed_password)
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str):
     return pwd_context.hash(password)
     
-def authenticate_user(_username: str, _password: str):
-    # Fetch the user from the database using the provided username
-    # (database handling code goes here, use a database ORM like SQLAlchemy)
-    user = UserBase(_username, _password)
-    if not user:
-        return None
-    if not verify_password(user.password, user.hashed_password):
-        return None
-    return user
+""" def authenticate_user(_username: str, _password: str):
+        # Fetch the user from the database using the provided username
+        # (database handling code goes here, use a database ORM like SQLAlchemy)
+        user = UserInDB(_username, _password)
+        if not user:
+            return None
+        if not verify_password(user.password, user.hashed_password):
+            return None
+        return user """

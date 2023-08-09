@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class TokenData(BaseModel):
-    username: str
+    username: Optional[str] = None
 
 class UserBase(BaseModel):
     username: str
@@ -23,3 +24,6 @@ class User(UserBase):
 
 class UserInDB(UserBase):
     id: int
+
+    class Config:
+        orm_mode = True

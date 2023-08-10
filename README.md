@@ -1,4 +1,4 @@
-# CODE BASE
+# CODE BASE - RESTApi, MicroService
 
 With Python, FastApi, Clean Architeture, SOLID, TDD, SqlAlquemy, and OAuth2 with JWT.
 
@@ -8,10 +8,6 @@ With Python, FastApi, Clean Architeture, SOLID, TDD, SqlAlquemy, and OAuth2 with
 - [applied concepts](#applied-concepts)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 
@@ -29,9 +25,23 @@ This is a codebase that I use to build the backend of my projects (API and Micro
 
 ## Features
 
-- Feature 1: Brief description
-- Feature 2: Brief description
-- ...
+my_project/
+├── app/
+    |── api/
+    |── core/
+    |── model/
+    |── repositories/
+    |── schemas/
+    |── service/
+    |── utils/
+    |── __util__.py
+    |── main.py
+├── migrations/
+├──.env
+├──.env_exemple
+├──.gitignore
+├── alembic.ini
+├── requirements.txt
 
 ## Installation
 
@@ -54,9 +64,14 @@ Chance this line in alembic.in to you db acess
 sqlalchemy.url = mysql://user:password@localhost/db_name
 ```
 
-Run
+Run app
 ```bash
 alembic upgrade head
+```
+
+Run Tests and Project
+```bash
+pytest tests/
 # and run project
 uvicorn app.main:app --reload
 ```

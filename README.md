@@ -38,7 +38,30 @@ This is a codebase that I use to build the backend of my projects (API and Micro
 Provide step-by-step instructions on how to install and set up your project locally. Include any dependencies that need to be installed, environment setup, and database configuration.
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/EstimaSahuma/codebase-fastapi.git
+cd codebase-fastapi
 pip install -r requirements.txt
 # Additional setup steps
+```
+
+Change file .env_exemple to .env and setup your db acess.
+```bash
+DATABASE_URL=mysql://user:password@localhost/db_name
+```
+
+Chance this line in alembic.in to you db acess
+```bash
+sqlalchemy.url = mysql://user:password@localhost/db_name
+```
+
+Run
+```bash
+alembic upgrade head
+# and run project
+uvicorn app.main:app --reload
+```
+
+
+
+
+
